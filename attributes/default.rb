@@ -1,0 +1,1 @@
+default['aig']['datacenter'] = 'am1'

@@ -1,0 +1,14 @@
+C:\WINDOWS\system32> knife data bag create artifacts
+Created data_bag[artifacts]
+
+C:\WINDOWS\system32> knife data bag from file bl_artifacts C:\chef-repo\cookbooks\blade_logic\artifacts.json
+Updated data_bag_item[artifacts::blade_logic]
+
+C:\WINDOWS\system32> knife data bag list
+artifacts
+
+
+C:\WINDOWS\system32> knife data bag show artifacts
+blade_logic
+
+C:\WINDOWS\system32>
