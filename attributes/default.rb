@@ -1,1 +1,1 @@
-default['aig']['datacenter'] = 'am1'
+default['aig']['datacenter'] = nil

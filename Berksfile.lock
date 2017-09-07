@@ -1,0 +1,7 @@
+DEPENDENCIES
+  blade_logic
+    path: .
+    metadata: true
+
+GRAPH
+  blade_logic (0.1.0)
