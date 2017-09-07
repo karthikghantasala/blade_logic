@@ -18,7 +18,10 @@ end
 
 dc_pref = node['aig']['datacenter']
 raise ArgumentError, 'Datacenter code must be supplied' if dc_pref.nil? 
-
+data_bag_item('artifacts', 'blade_logic').each do |dc_code|
+if dc_pref == dc_code
+   raise ArgumentError, 'The chosen location is not supported or the blade_logic binary information not found.' 
+end 
 #dc_pref_child_key = blade_logic_artifact['dc_pref']
 #binary_name = dc_pref_child_key['package']
 #binary_name = blade_logic_artifact['dc_pref']['package']
