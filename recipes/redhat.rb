@@ -1,3 +1,8 @@
+#
+# Cookbook:: blade_logic
+# Recipe:: redhat
+#
+# Copyright:: 2017, The Authors, All Rights Reserved.
 
 
 raise ArgumentError,"ERROR: Unsupported Operating system #{node['platform'] }. Please run this cookbook on RHEL systems only!!!" if node['platform_family'] != 'rhel'
