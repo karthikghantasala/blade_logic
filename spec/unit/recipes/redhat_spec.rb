@@ -6,12 +6,11 @@
 
 require 'spec_helper'
 
-
-describe 'blace_logic::redhat' do
+describe 'blade_logic::redhat' do
   context 'Validate supported installations' do
     before do
      stub_data_bag_item('artifacts', 'blade_logic').and_return(
-        {
+#       'blade_logic' =>  {
     		'am1' => {
              'package' => 'https://am1.artifactory/RSCD86-SP1-LIN64.rpm',
              'checksum' => '<shasum256>',
@@ -22,7 +21,7 @@ describe 'blace_logic::redhat' do
              'checksum' => '<shasum256>',
 			 'version' => '8.6SP1'
             }
-        }
+#        }
       )
     end
   platforms = {
@@ -57,7 +56,7 @@ describe 'blace_logic::redhat' do
 	end
 	
 	it 'creates a remote_file with attributes' do
-      expect(chef_run).to create_remote_file("/var/chef/cache/blade_logic_client/data_bag_item[").with(owner: 'root',group: 'root',mode: '0750' )
+      expect(chef_run).to create_remote_file("/var/chef/cache/blade_logic_client/RSCD86-SP1-LIN64.rpm").with(owner: 'root',group: 'root',mode: '0750' )
     end
 	
 	it 'installs a package when specifying the identity attribute' do
@@ -77,3 +76,4 @@ end
 end
 end
 #end
+
