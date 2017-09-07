@@ -71,9 +71,54 @@ describe 'blade_logic::redhat' do
      expect(chef_run).to enable_service('rscd')
     end
 	
-end
-end
-end
-end
-#end
+	it 'returns an error when datacenter attribute is not set' do
+     node.normal['aig']['datacenter'] = nil
+     expect { chef_run }.to raise_error(ArgumentError, 'Datacenter code must be supplied')
+    end
+	
+	it 'returns an error when chosen location is not found' do
+     node.normal['aig']['datacenter'] = 'bad_location'
+     expect { chef_run }.to raise_error(ArgumentError, 'The chosen location is not supported or the blade_logic binary information not found.')
+    end
 
+    it 'returns an error when data_bag (\'artifacts\',\'blade_logic\') is not found' do
+     stub_data_bag_item('artifacts', 'blade_logic').and_return(nil)
+     expect { chef_run }.to raise_error(ArgumentError, 'Unable to locate the DataBagItem("artifacts","blade_logic")')
+    end
+
+    
+	
+end
+end
+end
+  context 'Validate unsupported platforms' do
+    platforms = {
+      'windows' => {
+        'versions' => %w(2012 2012r2)
+      },
+	  'ubuntu' => {
+         'versions' => %w(14.04 16.04)
+	  }
+    }
+    platforms.each do |platform, components|
+      components['versions'].each do |version|
+        context "On #{platform} #{version}" do
+          context 'When all attributes are default' do
+            before do
+              Fauxhai.mock(platform: platform, version: version)
+            end
+            let(:chef_run) do
+              ChefSpec::SoloRunner.new(platform: platform, version: version) do |node|
+                # Node attributes
+              end.converge(described_recipe)
+            end
+
+            it 'raises an exception' do
+              expect { chef_run }.to raise_error(ArgumentError, "ERROR: Unsupported Operating system #{platform}. Please run this cookbook on RHEL systems only!!!")
+            end
+          end
+
+end
+
+end
+end
