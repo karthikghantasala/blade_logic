@@ -29,9 +29,18 @@ raise ArgumentError, 'The chosen location is not supported or the blade_logic bi
 #binary_name = blade_logic_artifact['dc_pref']['package']
 binary_name = (blade_logic_artifact[node['aig']['datacenter']]['package']).split('/')[-1]
 
+%w(/var/chef /var/chef/cache /var/chef/cache/blade_logic_client).each do |dir_name|
+directory "#{dir_name}" do
+		owner 'root'
+		group 'root'
+		mode '0755'
+	action :create
+	end
+end
 remote_file "/var/chef/cache/blade_logic_client/#{binary_name}" do
-  source "https://am1.artifactory/#{binary_name}"
-  checksum 'checksum'
+   source "https://am1.artifactory/#{binary_name}"
+#  source "http://mirror.centos.org/centos/7/os/x86_64/Packages/#{binary_name}"
+  #checksum 'checksum'
   owner 'root'
   group 'root'
   mode '0750'

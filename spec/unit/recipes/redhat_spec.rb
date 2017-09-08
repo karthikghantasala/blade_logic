@@ -6,7 +6,7 @@
 
 require 'spec_helper'
 
-describe 'spec_test::default' do
+describe 'blade_logic::redhat' do
   context 'Validate supported installations' do
     before do
      stub_data_bag_item('artifacts', 'blade_logic').and_return(
@@ -76,6 +76,15 @@ describe 'spec_test::default' do
      expect { chef_run }.to raise_error(ArgumentError, 'The chosen location is not supported or the blade_logic binary information not found.')
     end
 	
+	 it 'creates a directory with attributes' do
+    %w(/var/chef /var/chef/cache /var/chef/cache/blade_logic_client).each do |dir_name|
+	 expect(chef_run).to create_directory("#{dir_name}").with(
+      user:   'root',
+      group:  'root',
+	  mode: '0755'
+    )
+	end
+	end
 	#it 'returns an error when chosen location is not found' do
      #node.normal['aig']['datacenter'] = 'bad_location'
      #expect { chef_run }.to raise_error(ArgumentError, 'The chosen location is not supported or the blade_logic binary information not found.')
