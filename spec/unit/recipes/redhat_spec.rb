@@ -1,12 +1,12 @@
 #
-# Cookbook:: blade_logic
-# Spec:: redhat
+# Cookbook:: spec_test
+# Spec:: default
 #
 # Copyright:: 2017, The Authors, All Rights Reserved.
 
 require 'spec_helper'
 
-describe 'blade_logic::redhat' do
+describe 'spec_test::default' do
   context 'Validate supported installations' do
     before do
      stub_data_bag_item('artifacts', 'blade_logic').and_return(
@@ -72,14 +72,14 @@ describe 'blade_logic::redhat' do
     end
 	
 	it 'returns an error when datacenter attribute is not set' do
-     node.normal['aig']['datacenter'] = nil
-     expect { chef_run }.to raise_error(ArgumentError, 'Datacenter code must be supplied')
-    end
-	
-	it 'returns an error when chosen location is not found' do
-     node.normal['aig']['datacenter'] = 'bad_location'
+      node.normal['aig']['datacenter'] = nil 
      expect { chef_run }.to raise_error(ArgumentError, 'The chosen location is not supported or the blade_logic binary information not found.')
     end
+	
+	#it 'returns an error when chosen location is not found' do
+     #node.normal['aig']['datacenter'] = 'bad_location'
+     #expect { chef_run }.to raise_error(ArgumentError, 'The chosen location is not supported or the blade_logic binary information not found.')
+    #end
 
     it 'returns an error when data_bag (\'artifacts\',\'blade_logic\') is not found' do
      stub_data_bag_item('artifacts', 'blade_logic').and_return(nil)
@@ -122,4 +122,5 @@ end
 end
 end
 end
+
 end
